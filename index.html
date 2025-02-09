@@ -1,0 +1,84 @@
+#  nano templates/index.html
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>Encryption and Decryption</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+            font-size: 1.4em; /* کاهش اندازه متن */
+        }
+        input[type="text"] {
+            width: 90%; /* افزایش عرض */
+            height: 200px; /* افزایش ارتفاع */
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            font-size: 20px;
+            background-color: white;
+        }
+        input[type="submit"] {
+            width: 50%;
+            padding: 20px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        .encrypt-button {
+            background-color: blue;
+            color: white;
+        }
+        .decrypt-button {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>متن مورد خود را وارد کنید:</h1>
+    <form id="encrypt-form" action="/encrypt" method="post">
+        <input type="text" name="text" required>
+        <input type="submit" value="رمزنگاری" class="encrypt-button">
+    </form>
+    <form id="decrypt-form" action="/decrypt" method="post">
+        <input type="text" name="text" required>
+        <input type="submit" value="رمزگشایی" class="decrypt-button">
+    </form>
+    <div id="result"></div>
+    <script>
+        document.getElementById('encrypt-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var form = event.target;
+            var data = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: data
+            }).then(response => response.text()).then(html => {
+                document.getElementById('result').innerHTML = html;
+            });
+        });
+
+        document.getElementById('decrypt-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var form = event.target;
+            var data = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: data
+            }).then(response => response.text()).then(html => {
+                document.getElementById('result').innerHTML = html;
+            });
+        });
+    </script>
+</body>
+</html>

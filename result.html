@@ -1,0 +1,26 @@
+#  nano templates/result.html
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <h1>نتیجه:</h1>
+    <p>{{ result }}</p>
+    <a href="/">بازگشت</a>
+</body>
+</html>
