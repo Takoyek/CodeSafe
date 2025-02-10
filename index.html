@@ -28,7 +28,7 @@
             white-space: pre-wrap;
             overflow-wrap: break-word;
         }
-        input[type="submit"] {
+        input[type="submit"], .copy-button {
             width: 50%;
             padding: 20px;
             margin: 10px 0;
@@ -45,28 +45,32 @@
             color: white;
         }
         .copy-button {
-            background-color: gray;
+            background-color: purple;
             color: white;
-            padding: 10px 20px;
-            margin-bottom: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            border: none;
+        }
+        .label {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            text-align: right;
+            width: 90%;
         }
     </style>
 </head>
 <body>
-    <h1>متن مورد خود را وارد کنید</h1>
+    <h1>متن مورد نظر خود را وارد کنید</h1>
     <form id="encrypt-form" action="/encrypt" method="post">
+        <div class="label">رمزنگاری متن</div>
         <textarea name="text" required></textarea>
         <input type="submit" value="رمزنگاری" class="encrypt-button">
     </form>
     <form id="decrypt-form" action="/decrypt" method="post">
+        <div class="label">رمزگشایی متن</div>
         <textarea name="text" required></textarea>
         <input type="submit" value="رمزگشایی" class="decrypt-button">
     </form>
-    <button class="copy-button" onclick="copyResult()">کپی کردن نتیجه</button>
-    <textarea id="result-text" readonly></textarea>
+    <div class="label">نتیجه</div>
+    <textarea id="result-text" readonly style="width: 90%; height: 200px;"></textarea>
+    <button class="copy-button" onclick="copyResult()">کپی گرفتن از نتیجه</button>
     <script>
         document.getElementById('encrypt-form').addEventListener('submit', function(event) {
             event.preventDefault();
