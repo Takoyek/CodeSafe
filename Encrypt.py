@@ -1,3 +1,4 @@
+#  nano encrypt.py
 def encrypt(text):
     encrypted = ''
     for char in text:
@@ -5,6 +6,6 @@ def encrypt(text):
     return encrypted.strip()
 
 if __name__ == "__main__":
-    original_text = input("Please enter the text to encrypt: ")
+    original_text = "Saeid"
     encrypted_text = encrypt(original_text)
     print(f"Encrypted text: {encrypted_text}")

@@ -1,4 +1,3 @@
-#  nano templates/index.html
 <!DOCTYPE html>
 <html lang="fa">
 <head>
@@ -15,16 +14,19 @@
             margin: 0;
             font-family: Arial, sans-serif;
             flex-direction: column;
-            font-size: 1.4em; /* کاهش اندازه متن */
+            font-size: 1.4em;
         }
-        input[type="text"] {
-            width: 90%; /* افزایش عرض */
-            height: 200px; /* افزایش ارتفاع */
+        textarea {
+            width: 90%;
+            height: 200px;
             padding: 10px;
             margin: 10px 0;
             box-sizing: border-box;
             font-size: 20px;
             background-color: white;
+            resize: none;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
         }
         input[type="submit"] {
             width: 50%;
@@ -42,19 +44,29 @@
             background-color: green;
             color: white;
         }
+        .copy-button {
+            background-color: gray;
+            color: white;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+        }
     </style>
 </head>
 <body>
-    <h1>متن مورد خود را وارد کنید:</h1>
+    <h1>متن مورد خود را وارد کنید</h1>
     <form id="encrypt-form" action="/encrypt" method="post">
-        <input type="text" name="text" required>
+        <textarea name="text" required></textarea>
         <input type="submit" value="رمزنگاری" class="encrypt-button">
     </form>
     <form id="decrypt-form" action="/decrypt" method="post">
-        <input type="text" name="text" required>
+        <textarea name="text" required></textarea>
         <input type="submit" value="رمزگشایی" class="decrypt-button">
     </form>
-    <div id="result"></div>
+    <button class="copy-button" onclick="copyResult()">کپی کردن نتیجه</button>
+    <textarea id="result-text" readonly></textarea>
     <script>
         document.getElementById('encrypt-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -63,8 +75,8 @@
             fetch(form.action, {
                 method: 'POST',
                 body: data
-            }).then(response => response.text()).then(html => {
-                document.getElementById('result').innerHTML = html;
+            }).then(response => response.json()).then(data => {
+                document.getElementById('result-text').value = data.result;
             });
         });
 
@@ -75,10 +87,16 @@
             fetch(form.action, {
                 method: 'POST',
                 body: data
-            }).then(response => response.text()).then(html => {
-                document.getElementById('result').innerHTML = html;
+            }).then(response => response.json()).then(data => {
+                document.getElementById('result-text').value = data.result;
             });
         });
+
+        function copyResult() {
+            var resultText = document.getElementById('result-text');
+            resultText.select();
+            document.execCommand('copy');
+        }
     </script>
 </body>
 </html>
