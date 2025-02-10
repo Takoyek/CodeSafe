@@ -5,8 +5,8 @@
     <title>Encryption and Decryption</title>
     <style>
         body {
-            background-color: black;
-            color: white;
+            background-color: rgb(0, 0, 0);
+            color: rgb(187, 211, 255);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,13 +17,13 @@
             font-size: 1.4em;
         }
         textarea {
-            width: 90%;
-            height: 200px;
+            width: 500px;
+            height: 150px;
             padding: 10px;
             margin: 10px 0;
             box-sizing: border-box;
             font-size: 20px;
-            background-color: white;
+            background-color: rgb(255, 255, 255);
             resize: none;
             white-space: pre-wrap;
             overflow-wrap: break-word;
@@ -47,12 +47,28 @@
         .copy-button {
             background-color: purple;
             color: white;
+            width: 25%;
         }
         .label {
             font-size: 1.2em;
             margin-bottom: 5px;
             text-align: right;
-            width: 90%;
+            width: 85%;
+        }
+        #result-text {
+            width: 500;
+            height: 150;
+            padding: 10px;
+            margin: 10px 5px;
+            box-sizing: border-box;
+            font-size: 20px;
+            background-color: rgb(255, 255, 255);
+            resize: none;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            color: rgb(39, 0, 148); /* تنظیم رنگ متن */
+            font-family: 'Courier New', Courier, monospace; /* تنظیم فونت */
+            text-align: center; /* تنظیم جایگاه قرارگیری متن */
         }
     </style>
 </head>
@@ -68,8 +84,8 @@
         <textarea name="text" required></textarea>
         <input type="submit" value="رمزگشایی" class="decrypt-button">
     </form>
-    <div class="label">نتیجه</div>
-    <textarea id="result-text" readonly style="width: 90%; height: 200px;"></textarea>
+    <div class="label" style="color: rgb(255, 255, 0); font-family: Arial, sans-serif; text-align: center; font-size: 40px;">نتیجه</div>
+    <textarea id="result-text" readonly></textarea>
     <button class="copy-button" onclick="copyResult()">کپی گرفتن از نتیجه</button>
     <script>
         document.getElementById('encrypt-form').addEventListener('submit', function(event) {
