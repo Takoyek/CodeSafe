@@ -1,121 +1,253 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Encryption and Decryption</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه رمزنگاری و رمزگشایی</title>
     <style>
-        body {
-            background-color: rgb(0, 0, 0);
-            color: rgb(187, 211, 255);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --accent-color: #9c27b0;
+            --text-color: #e8f0fe;
+            --background-color: #0a1929;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            font-family: Arial, sans-serif;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Vazirmatn', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
             flex-direction: column;
-            font-size: 1.4em;
+            align-items: center;
+            padding: 2rem;
         }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #90caf9;
+            font-weight: 500;
+        }
+
         textarea {
-            width: 500px;
+            width: 100%;
             height: 150px;
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-            font-size: 20px;
-            background-color: rgb(255, 255, 255);
-            resize: none;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
+            padding: 1rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.9);
+            color: #1a237e;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            transition: all 0.3s ease;
+            user-select: text;
         }
-        input[type="submit"], .copy-button {
-            width: 50%;
-            padding: 20px;
-            margin: 10px 0;
-            box-sizing: border-box;
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(26,115,232,0.3);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .action-button {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
         .encrypt-button {
-            background-color: blue;
+            background: var(--primary-color);
             color: white;
         }
+
         .decrypt-button {
-            background-color: green;
+            background: var(--secondary-color);
             color: white;
         }
-        .copy-button {
-            background-color: purple;
-            color: white;
-            width: 25%;
+
+        .result-section {
+            margin-top: 2rem;
+            position: relative;
         }
-        .label {
-            font-size: 1.2em;
-            margin-bottom: 5px;
-            text-align: right;
-            width: 85%;
-        }
+
         #result-text {
-            width: 500;
-            height: 150;
-            padding: 10px;
-            margin: 10px 5px;
-            box-sizing: border-box;
-            font-size: 20px;
-            background-color: rgb(255, 255, 255);
-            resize: none;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-            color: rgb(39, 0, 148); /* تنظیم رنگ متن */
-            font-family: 'Courier New', Courier, monospace; /* تنظیم فونت */
-            text-align: center; /* تنظیم جایگاه قرارگیری متن */
+            background: rgba(255,255,255,0.95);
+            color: #1a237e;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            cursor: not-allowed;
+        }
+
+        .copy-button {
+            background: var(--accent-color);
+            color: white;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 0;
+            }
+            
+            textarea {
+                height: 120px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>متن مورد نظر خود را وارد کنید</h1>
-    <form id="encrypt-form" action="/encrypt" method="post">
-        <div class="label">رمزنگاری متن</div>
-        <textarea name="text" required></textarea>
-        <input type="submit" value="رمزنگاری" class="encrypt-button">
-    </form>
-    <form id="decrypt-form" action="/decrypt" method="post">
-        <div class="label">رمزگشایی متن</div>
-        <textarea name="text" required></textarea>
-        <input type="submit" value="رمزگشایی" class="decrypt-button">
-    </form>
-    <div class="label" style="color: rgb(255, 255, 0); font-family: Arial, sans-serif; text-align: center; font-size: 40px;">نتیجه</div>
-    <textarea id="result-text" readonly></textarea>
-    <button class="copy-button" onclick="copyResult()">کپی گرفتن از نتیجه</button>
+    <h1>سامانه رمزنگاری پیشرفته</h1>
+    
+    <div class="container">
+        <!-- بخش رمزنگاری -->
+        <div class="form-section">
+            <form id="encrypt-form" action="/encrypt" method="post">
+                <label class="form-label">متن اصلی برای رمزنگاری:</label>
+                <textarea name="text" required placeholder="متن خود را اینجا وارد کنید..."></textarea>
+                <div class="button-group">
+                    <button type="submit" class="action-button encrypt-button">
+                        🔒 رمزنگاری
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- بخش رمزگشایی -->
+        <div class="form-section">
+            <form id="decrypt-form" action="/decrypt" method="post">
+                <label class="form-label">متن رمزگذاری شده برای رمزگشایی:</label>
+                <textarea name="text" required placeholder="متن رمزگذاری شده را اینجا وارد کنید..."></textarea>
+                <div class="button-group">
+                    <button type="submit" class="action-button decrypt-button">
+                        🔓 رمزگشایی
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- بخش نتایج -->
+        <div class="form-section result-section">
+            <label class="form-label">نتیجه عملیات:</label>
+            <textarea id="result-text" readonly></textarea>
+            <button class="action-button copy-button" onclick="copyResult()">
+                📋 کپی گرفتن از نتیجه عملیات
+            </button>
+        </div>
+    </div>
+
     <script>
-        document.getElementById('encrypt-form').addEventListener('submit', function(event) {
+        // بهبود اسکریپت با افزودن مدیریت خطا
+        async function handleFormSubmit(event, url) {
             event.preventDefault();
-            var form = event.target;
-            var data = new FormData(form);
-            fetch(form.action, {
-                method: 'POST',
-                body: data
-            }).then(response => response.json()).then(data => {
-                document.getElementById('result-text').value = data.result;
-            });
-        });
+            const form = event.target;
+            const data = new FormData(form);
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: data
+                });
+                
+                if (!response.ok) throw new Error('خطای سرور');
+                const result = await response.json();
+                
+                document.getElementById('result-text').value = result.result;
+            } catch (error) {
+                alert(`خطا: ${error.message}`);
+            }
+        }
 
-        document.getElementById('decrypt-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var form = event.target;
-            var data = new FormData(form);
-            fetch(form.action, {
-                method: 'POST',
-                body: data
-            }).then(response => response.json()).then(data => {
-                document.getElementById('result-text').value = data.result;
-            });
-        });
+        // رویدادهای فرم
+        document.getElementById('encrypt-form').addEventListener('submit', (e) => 
+            handleFormSubmit(e, '/encrypt'));
+        document.getElementById('decrypt-form').addEventListener('submit', (e) => 
+            handleFormSubmit(e, '/decrypt'));
 
+        // تابع کپی بهبود یافته
         function copyResult() {
-            var resultText = document.getElementById('result-text');
-            resultText.select();
-            document.execCommand('copy');
+            const resultText = document.getElementById('result-text');
+            const copyBtn = document.querySelector('.copy-button');
+            
+            try {
+                // ایجاد یک محدوده انتخاب موقت
+                resultText.select();
+                resultText.setSelectionRange(0, 99999); // برای دستگاه‌های موبایل
+                
+                // اجرای دستور کپی
+                const successful = document.execCommand('copy');
+                
+                if(successful) {
+                    // تغییر موقت متن دکمه برای بازخورد بصری
+                    copyBtn.textContent = '✅ کپی موفق!';
+                    setTimeout(() => {
+                        copyBtn.textContent = '📋 کپی گرفتن از نتیجه عملیات';
+                    }, 2000);
+                } else {
+                    throw new Error('دسترسی به کلیپبورد امکان‌پذیر نیست');
+                }
+            } catch (error) {
+                alert('برای کپی کردن از کلیدهای Ctrl+C (یا Cmd+C در مک) استفاده کنید');
+            }
         }
     </script>
 </body>
