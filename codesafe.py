@@ -1,30 +1,10 @@
 from flask import Flask, request, render_template, redirect, url_for, jsonify
 from encrypt import encrypt
 from decrypt import decrypt
-from functools import wraps
-from flask import Flask, request, render_template, redirect, url_for, Response
 
 app = Flask(__name__)
 
-def check_auth(username, password):
-    return username == 'avida' and password == '0098'
-
-def authenticate():
-    return Response(
-        'Please log in', 401,
-        {'WWW-Authenticate': 'Basic realm="Login Required"'})
-
-def requires_auth(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.authorization
-        if not auth or not check_auth(auth.username, auth.password):
-            return authenticate()
-        return f(*args, **kwargs)
-    return decorated
-
 @app.route('/')
-@requires_auth
 def index():
     return render_template('login.html')
 
